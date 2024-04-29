@@ -75,10 +75,11 @@
     }
   }
 
+  
   .animated-element {
-    opacity: 0; /* Start with the element invisible */
-    transform: translateY(50px); /* Start 50px below the final position */
-    animation: fadeInAndSlideUp 1.5s ease forwards; /* Animation name, duration, timing-function, fill-mode */
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInAndSlideUp 1.5s ease forwards;
 }
 
 @keyframes fadeInAndSlideUp {

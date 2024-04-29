@@ -17,7 +17,7 @@ function Navbar() {
         <nav className="flex items-center space-x-4 lg:space-x-6">
           <Link
             href={"/"}
-            className="lg:text-xl mr-6 flex items-center font-bold"
+            className="lg:text-xl font-pinyon mr-6 flex items-center font-bold"
           >
             Shirookami
           </Link>

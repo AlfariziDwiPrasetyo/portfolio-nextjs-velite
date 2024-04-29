@@ -6,7 +6,6 @@ import Navbar from "@/components/Navbar";
 import Provider from "@/components/Provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-
 export const metadata: Metadata = {
   title: "Shirookami",
   description: "Information about me",
@@ -18,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
