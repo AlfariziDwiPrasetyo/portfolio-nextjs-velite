@@ -25,10 +25,10 @@ function MobileNav() {
           </MobileLink>
 
           <MobileLink
-            href={"/posts"}
+            href={"/writing"}
             className="text-md mr-6 flex items-center font-normal"
           >
-            Post
+            Writing
           </MobileLink>
 
           <MobileLink

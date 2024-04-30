@@ -47,13 +47,13 @@ function Navbar() {
             Works
           </Link>
           <Link
-            href={"/posts"}
+            href={"/writing"}
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block",
-              pathname === "/posts" ? "text-foreground" : "text-foreground/60"
+              pathname === "/writing" ? "text-foreground" : "text-foreground/60"
             )}
           >
-            Posts
+            Writing
           </Link>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
