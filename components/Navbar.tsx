@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Icons } from "./Icons";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
@@ -11,9 +11,25 @@ import ThemeController from "./ThemeController";
 
 function Navbar() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScrolled = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScrolled);
+
+    return () => {
+      window.removeEventListener("scroll", handleScrolled);
+    };
+  });
+
   return (
-    <header className="z-10 sticky top-0 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-backgroud/60 ">
-      <div className="container flex h-14 max-w-screen-2xl items-center ">
+    <header
+      className={`z-10 sticky top-0 w-full border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-backgroud/60 border-b`}
+    >
+      <div className="container flex h-14 max-w-screen-2xl items-center md:px-36">
         <nav className="flex items-center space-x-4 lg:space-x-6">
           <Link
             href={"/"}
@@ -41,28 +57,6 @@ function Navbar() {
           </Link>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
-          <Link href={siteConfig.links.github} target="_blank">
-            <div
-              className={cn(
-                buttonVariants({ variant: "ghost" }),
-                "w-10 px-0 hidden sm:inline-flex"
-              )}
-            >
-              <Icons.gitHub className="h-4 w-4" />
-              <span className="sr-only">Github</span>
-            </div>
-          </Link>
-          <Link href={siteConfig.links.instagram} target="_blank">
-            <div
-              className={cn(
-                buttonVariants({ variant: "ghost" }),
-                "w-10 px-0 hidden sm:inline-flex"
-              )}
-            >
-              <Icons.instagram className="h-4 w-4" />
-              <span className="sr-only">Instagram</span>
-            </div>
-          </Link>
           <ThemeController />
           <MobileNav />
         </div>

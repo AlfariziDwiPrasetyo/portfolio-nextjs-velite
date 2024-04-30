@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Merriweather, Montserrat } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import Provider from "@/components/Provider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+// const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const merriweather = Merriweather({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: "400",
+});
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   title: "Shirookami",
   description: "Information about me",
@@ -21,13 +27,13 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          inter.variable
+          montserrat.variable
         )}
       >
         <Provider>
-          <div className="relative flex min-h-dvh flex-col bg-background md:px-36">
+          <div className="relative flex min-h-dvh flex-col bg-background">
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 md:px-36">{children}</main>
           </div>
         </Provider>
       </body>

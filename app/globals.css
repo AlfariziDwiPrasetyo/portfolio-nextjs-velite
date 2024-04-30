@@ -75,6 +75,9 @@
     }
   }
 
+  .scrolled{
+    border-bottom-width:1px ;
+  }
   
   .animated-element {
     opacity: 0;
