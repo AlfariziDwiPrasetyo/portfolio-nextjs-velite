@@ -10,7 +10,7 @@ const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Shirookami",
-  description: "Information about me",
+  description: "My personal web portfolio",
 };
 
 export default function RootLayout({
