@@ -15,9 +15,9 @@ const writing = defineCollection({
     .object({
       slug: s.path(),
       title: s.string().max(99),
-      description: s.string().max(999).optional(),
       date: s.isodate(),
-      draft: s.boolean().default(true),
+      description: s.string().max(999).optional(),
+      published: s.boolean().default(true),
       body: s.mdx(),
     })
     .transform(computedFields),

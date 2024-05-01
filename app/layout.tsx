@@ -5,12 +5,6 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import Provider from "@/components/Provider";
 
-// const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-const merriweather = Merriweather({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: "400",
-});
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   title: "Shirookami",

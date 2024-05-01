@@ -1,30 +1,29 @@
 import React from "react";
 import Link from "next/link";
-import { Calendar } from "lucide-react";
-import { cn, formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 
 interface ItemProps {
   slug: string;
   title: string;
-  description?: string;
   date: string;
+  description?: string;
 }
 
-function WritingItem({ slug, title, description, date }: ItemProps) {
+function WritingItem({ slug, title, date, description }: ItemProps) {
   return (
-    <article className="flex flex-col border-border border-b py-4">
+    <article className="grid grid-cols-1 md:grid-cols-2 text-sm border-border py-4">
+      <div className="text-muted-foreground">
+        <time dateTime={date}>{formatDate(date)}</time>
+      </div>
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">
           <Link href={slug}>{title}</Link>
         </h2>
-        <div className="max-w-none text-muted-foreground">{description}</div>
+        <p className="text-muted-foreground text-md">{description}</p>
         <div className="justify-between items-center flex ">
           <dl>
             <dt className="sr-only">Published On</dt>
-            <dd className="text-sm sm:text-base font-medium flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              <time dateTime={date}>{formatDate(date)}</time>
-            </dd>
+            <dd className="text-sm sm:text-base font-medium flex items-center gap-1"></dd>
           </dl>
         </div>
       </div>

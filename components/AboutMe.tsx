@@ -10,7 +10,7 @@ import Link from "next/link";
 
 function AboutMe() {
   return (
-    <div className="space-y-5 animated-element">
+    <div className="space-y-5 animated-element pattern-bg">
       <h1 className="font-bold text-3xl md:text-4xl tracking-tight">
         Alfarizi Dwi Prasetyo
       </h1>

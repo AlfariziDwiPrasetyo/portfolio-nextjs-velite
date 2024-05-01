@@ -81,21 +81,19 @@
   
   .animated-element {
     opacity: 0;
-    transform: translateY(50px);
-    animation: fadeInAndSlideUp 1.5s ease forwards;
+    /* transform: translateY(50px); */
+    animation: fadeInAndSlideUp 1.0s ease forwards;
 }
+
+
 
 @keyframes fadeInAndSlideUp {
     0% {
         opacity: 0;
-        transform: translateY(50px);
-    }
-    50% {
-        opacity: 1;
-        transform: translateY(25px);
+        /* transform: translateY(50px); */
     }
     100% {
         opacity: 1;
-        transform: translateY(0);
+        /* transform: translateY(0); */
     }
 }
