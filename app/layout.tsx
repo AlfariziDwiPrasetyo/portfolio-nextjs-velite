@@ -11,6 +11,9 @@ const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   title: "Shirookami",
   description: "My personal web portfolio",
+  icons: {
+    icon: "./icon.ico",
+  },
 };
 
 export default function RootLayout({
