@@ -31,6 +31,7 @@ function Navbar() {
       <div className="container flex h-14 max-w-screen-2xl items-center md:px-36">
         <nav className="flex items-center space-x-4 lg:space-x-6">
           <Link
+            aria-label="go to homepage"
             href={"/"}
             className={
               "lg:text-xl flex font-pinyon parisienne mr-6 space-x-2 items-center font-bold"
@@ -40,6 +41,7 @@ function Navbar() {
             <p className="text-xs">shirookami</p>
           </Link>
           <Link
+            aria-label="go to work page"
             href={"/work"}
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block",
@@ -49,6 +51,7 @@ function Navbar() {
             Works
           </Link>
           <Link
+            aria-label="writing page"
             href={"/writing"}
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block",

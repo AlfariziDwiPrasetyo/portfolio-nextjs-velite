@@ -16,9 +16,13 @@ function MobileNav() {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant={"outline"} className="w-10 px-0 sm:hidden">
+        <Button
+          aria-label="dropdown button"
+          variant={"outline"}
+          className="w-10 px-0 sm:hidden"
+        >
           <Menu className="h-5 w-5" />
-          <span className="sr-only">Toogle Theme</span>
+          <span className="sr-only">Dropdown menu</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align={"end"} className="space-y-3">

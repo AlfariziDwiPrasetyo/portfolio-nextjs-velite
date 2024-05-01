@@ -9,7 +9,12 @@ function Footer() {
         <p>
           Licensed under{" "}
           <span className="underline underline-offset-2 hover:text-primary">
-            <Link href={"https://mit-license.org/"}>MIT License</Link>
+            <Link
+              aria-label="go to MIT license web"
+              href={"https://mit-license.org/"}
+            >
+              MIT License
+            </Link>
           </span>{" "}
         </p>
       </div>

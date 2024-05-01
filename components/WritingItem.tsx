@@ -17,7 +17,9 @@ function WritingItem({ slug, title, date, description }: ItemProps) {
       </div>
       <div className="space-y-2 md:col-span-2 w-full">
         <h2 className="text-2xl font-bold">
-          <Link href={slug}>{title}</Link>
+          <Link aria-label="title of writing " href={slug}>
+            {title}
+          </Link>
         </h2>
         <p className="text-muted-foreground text-md">{description}</p>
         <div className="justify-between items-center flex ">

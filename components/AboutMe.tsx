@@ -32,25 +32,35 @@ function AboutMe() {
         with a unique blend of creativity, technical knowledge.
       </p>
       <div className="flex space-x-2">
-        <Link href={"https://www.facebook.com/shirookam/"}>
-          <Button variant={"ghost"}>
+        <Link
+          aria-label="my facebook link"
+          href={"https://www.facebook.com/shirookam/"}
+        >
+          <Button aria-label="facebook button" variant={"ghost"}>
             <FaFacebookF size={20} />
           </Button>
         </Link>
-        <Link href={"https://www.instagram.com/alfariziiprasetyo/"}>
-          <Button variant={"ghost"}>
+        <Link
+          aria-label="my instagram link"
+          href={"https://www.instagram.com/alfariziiprasetyo/"}
+        >
+          <Button aria-label="instagram button" variant={"ghost"}>
             <FaInstagram size={20} />
           </Button>
         </Link>
         <Link
+          aria-label="my linkedin link"
           href={"https://www.linkedin.com/in/al-farizi-dwi-prasetyo-29a310197/"}
         >
-          <Button variant={"ghost"}>
+          <Button aria-label="linkedin button" variant={"ghost"}>
             <FaLinkedinIn size={20} />
           </Button>
         </Link>
-        <Link href={"https://github.com/AlfariziDwiPrasetyo"}>
-          <Button variant={"ghost"}>
+        <Link
+          aria-label="my github link"
+          href={"https://github.com/AlfariziDwiPrasetyo"}
+        >
+          <Button aria-label="github button" variant={"ghost"}>
             <FaGithub size={20} />
           </Button>
         </Link>
