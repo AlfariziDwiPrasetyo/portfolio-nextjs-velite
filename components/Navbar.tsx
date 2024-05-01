@@ -1,13 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Icons } from "./Icons";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "./ui/button";
 import { usePathname } from "next/navigation";
 import MobileNav from "./MobileNav";
 import ThemeController from "./ThemeController";
+import { RiCodeBoxFill } from "react-icons/ri";
 
 function Navbar() {
   const pathname = usePathname();
@@ -33,9 +32,12 @@ function Navbar() {
         <nav className="flex items-center space-x-4 lg:space-x-6">
           <Link
             href={"/"}
-            className="lg:text-xl font-pinyon mr-6 flex items-center font-bold"
+            className={
+              "lg:text-xl flex font-pinyon parisienne mr-6 space-x-2 items-center font-bold"
+            }
           >
-            Shirookami
+            <RiCodeBoxFill size={30} />
+            <p className="text-xs">shirookami</p>
           </Link>
           <Link
             href={"/work"}

@@ -11,11 +11,11 @@ interface ItemProps {
 
 function WritingItem({ slug, title, date, description }: ItemProps) {
   return (
-    <article className="grid grid-cols-1 md:grid-cols-2 text-sm border-border py-4">
+    <article className="grid grid-cols-1 md:grid-cols-3 text-sm border-border py-4">
       <div className="text-muted-foreground">
         <time dateTime={date}>{formatDate(date)}</time>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 md:col-span-2 w-full">
         <h2 className="text-2xl font-bold">
           <Link href={slug}>{title}</Link>
         </h2>

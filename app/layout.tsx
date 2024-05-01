@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Merriweather, Montserrat } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
@@ -7,6 +7,7 @@ import Provider from "@/components/Provider";
 import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
+
 export const metadata: Metadata = {
   title: "Shirookami",
   description: "Information about me",
