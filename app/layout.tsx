@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import Provider from "@/components/Provider";
+import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({
           <div className="relative flex min-h-dvh flex-col bg-background">
             <Navbar />
             <main className="flex-1 md:px-36">{children}</main>
+            <Footer />
           </div>
         </Provider>
       </body>
