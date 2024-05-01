@@ -11,7 +11,7 @@ const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   title: "Shirookami",
   description: "My personal web portfolio",
-  metadataBase: new URL("https://shirookami.vercel.app"),
+  metadataBase: new URL("https://shirookami.vercel.app/"),
 };
 
 export default function RootLayout({
