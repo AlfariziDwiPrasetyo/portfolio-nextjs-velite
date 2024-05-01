@@ -27,6 +27,7 @@ export default async function WritingPage({ params }: WritingPageProps) {
   if (!post || !post.published) {
     notFound();
   }
+
   return (
     <article className="animated-element container mt-20 py-6 prose dark:prose-invert max-w-2xl mx-auto">
       <h1 className="mb-2 text-4xl sm:text-5xl font-bold">{post.title}</h1>

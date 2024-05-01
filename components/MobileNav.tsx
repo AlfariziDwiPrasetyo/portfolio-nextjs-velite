@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
-import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
+import { MdArrowOutward } from "react-icons/md";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
 function MobileNav() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -20,55 +21,25 @@ function MobileNav() {
           <span className="sr-only">Toogle Theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align={"end"}
-        className="p-4 space-y-5 flex flex-col"
-      >
-        <MobileLink
-          href={"/writing"}
-          className="text-md mr-6 flex items-center font-normal"
+      <DropdownMenuContent align={"end"} className="space-y-3">
+        <DropdownMenuItem
+          onClick={() => router.push("/writing")}
+          className="text-md flex items-center font-normal justify-between"
         >
           Writing
-        </MobileLink>
+          <MdArrowOutward />
+        </DropdownMenuItem>
 
-        <MobileLink
-          className="text-md mr-6 flex items-center font-normal"
-          href={"/works"}
+        <DropdownMenuItem
+          onClick={() => router.push("/work")}
+          className="text-md flex items-center font-normal justify-between"
         >
           Work
-        </MobileLink>
+          <MdArrowOutward />
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
 
 export default MobileNav;
-
-interface MobileLinkProps extends LinkProps {
-  children: React.ReactNode;
-  onOpenChange?: (open: boolean) => void;
-  className: string;
-}
-
-function MobileLink({
-  href,
-  children,
-  onOpenChange,
-  className,
-  ...props
-}: MobileLinkProps) {
-  const router = useRouter();
-  return (
-    <Link
-      href={href}
-      onClick={() => {
-        router.push(href.toString());
-        onOpenChange?.(false);
-      }}
-      {...props}
-      className={className}
-    >
-      {children}
-    </Link>
-  );
-}

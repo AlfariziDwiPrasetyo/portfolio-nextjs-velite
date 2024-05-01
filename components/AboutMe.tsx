@@ -23,8 +23,13 @@ function AboutMe() {
         appreciate loyalty and perseverance, both on and off the field. As I
         develop my programming skills, I love exploring innovative solutions and
         staying current in the ever-evolving tech industry. Eager to learn and
-        grow, I infuse my work with a unique blend of creativity, technical
-        knowledge.
+        grow, I infuse{" "}
+        <Link href={"/work"}>
+          <span className="underline font-bold decoration-sky-500">
+            my work
+          </span>
+        </Link>{" "}
+        with a unique blend of creativity, technical knowledge.
       </p>
       <div className="flex space-x-2">
         <Link href={"https://www.facebook.com/shirookam/"}>
