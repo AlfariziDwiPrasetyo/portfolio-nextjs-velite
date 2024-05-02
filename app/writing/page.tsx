@@ -2,10 +2,27 @@ import React from "react";
 import { writing } from "#site/content";
 import WritingItem from "@/components/WritingItem";
 import { sortWritingPosts } from "@/lib/utils";
+import QueryPagination from "@/components/QueryPagination";
 
-function page() {
+const WRITING_PER_PAGE = 4;
+
+interface WritingParamProps {
+  searchParams: {
+    page?: string;
+  };
+}
+
+function page({ searchParams }: WritingParamProps) {
+  const currentPage = Number(searchParams?.page) || 1;
   const sortedData = sortWritingPosts(writing.filter((post) => post.published));
-  const data = sortedData;
+  const totalPage = Math.ceil(sortedData.length / WRITING_PER_PAGE);
+
+  const displayWriting = sortedData.slice(
+    WRITING_PER_PAGE * (currentPage - 1),
+    WRITING_PER_PAGE * currentPage
+  );
+  const data = displayWriting;
+
   return (
     <div className="container max-w-4xl animated-element mt-10 py-6 lg:py-10">
       <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between">
@@ -37,6 +54,7 @@ function page() {
       ) : (
         <p>writing is not written yet</p>
       )}
+      <QueryPagination totalPage={totalPage} />
     </div>
   );
 }
