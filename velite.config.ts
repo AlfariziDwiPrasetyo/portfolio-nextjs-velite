@@ -23,6 +23,20 @@ const writing = defineCollection({
     .transform(computedFields),
 });
 
+const work = defineCollection({
+  name: "work",
+  pattern: "work/**/*.mdx",
+  schema: s.object({
+    slug: s.path(),
+    title: s.string().max(999),
+    date: s.isodate(),
+    description: s.string().max(999).optional(),
+    published: s.boolean().default(true),
+    body: s.mdx(),
+    language: s.enum(["typescript", "javascript", "python", "kotlin", "none"]),
+  }),
+});
+
 export default defineConfig({
   root: "content",
   output: {
