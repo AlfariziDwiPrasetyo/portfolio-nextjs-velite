@@ -1,0 +1,83 @@
+.typescript {
+    background-color: #e0e7ff; /* bg-indigo-100 */
+    color: #3730a3; /* text-indigo-800 */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    margin-right: 0.5rem; /* me-2 */
+    padding: 0.125rem 0.625rem; /* px-2.5 py-0.5 */
+    border-radius: 0.375rem; /* rounded */
+}
+.typescript.dark {
+    background-color: #312e81; /* dark:bg-indigo-900 */
+    color: #d8b4fe; /* dark:text-indigo-300 */
+}
+
+.javascript {
+    background-color: #5f370e; /* bg-yellow-100 */
+    color: #fde047; /* text-yellow-800 */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    margin-right: 0.5rem; /* me-2 */
+    padding: 0.125rem 0.625rem; /* px-2.5 py-0.5 */
+    border-radius: 0.375rem; /* rounded */
+}
+.javascript.dark {
+    background-color: #fef3c7; /* dark:bg-yellow-900 */
+    color: #92400e; /* dark:text-yellow-300 */
+}
+
+.kotlin {
+    background-color: #ede9fe; /* bg-purple-100 */
+    color: #5b21b6; /* text-purple-800 */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    margin-right: 0.5rem; /* me-2 */
+    padding: 0.125rem 0.625rem; /* px-2.5 py-0.5 */
+    border-radius: 0.375rem; /* rounded */
+}
+.kotlin.dark {
+    background-color: #4c1d95; /* dark:bg-purple-900 */
+    color: #c4b5fd; /* dark:text-purple-300 */
+}
+
+.none {
+    background-color: #f3f4f6; /* bg-gray-100 */
+    color: #1f2937; /* text-gray-800 */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    margin-right: 0.5rem; /* me-2 */
+    padding: 0.125rem 0.625rem; /* px-2.5 py-0.5 */
+    border-radius: 0.375rem; /* rounded */
+}
+.none.dark {
+    background-color: #404040; /* dark:bg-gray-700 */
+    color: #d1d5db; /* dark:text-gray-300 */
+}
+
+.java {
+    background-color: #ccfbf1; /* bg-green-100 */
+    color: #065f46; /* text-green-800 */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    margin-right: 0.5rem; /* me-2 */
+    padding: 0.125rem 0.625rem; /* px-2.5 py-0.5 */
+    border-radius: 0.375rem; /* rounded */
+}
+.java.dark {
+    background-color: #064e3b; /* dark:bg-green-900 */
+    color: #10b981; /* dark:text-green-300 */
+}
+
+.python {
+    background-color: #dbeafe; 
+    color: #1e40af; 
+    font-size: 0.75rem; 
+    font-weight: 500; 
+    margin-right: 0.5rem; 
+    padding: 0.125rem 0.625rem; 
+    border-radius: 0.375rem;
+}
+.python.dark {
+    background-color: #dbeafe;
+    color: #1e40af; 
+}

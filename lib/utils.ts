@@ -22,3 +22,10 @@ export function sortWritingPosts(posts: Array<writing>) {
     return 0;
   });
 }
+
+export function truncateText(text: string, maxLength: number) {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.substring(0, maxLength - 3) + "...";
+}

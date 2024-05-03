@@ -26,15 +26,24 @@ const writing = defineCollection({
 const work = defineCollection({
   name: "work",
   pattern: "work/**/*.mdx",
-  schema: s.object({
-    slug: s.path(),
-    title: s.string().max(999),
-    date: s.isodate(),
-    description: s.string().max(999).optional(),
-    published: s.boolean().default(true),
-    body: s.mdx(),
-    language: s.enum(["typescript", "javascript", "python", "kotlin", "none"]),
-  }),
+  schema: s
+    .object({
+      slug: s.path(),
+      title: s.string().max(999),
+      description: s.string().max(999).optional(),
+      published: s.boolean().default(true),
+      body: s.mdx(),
+      link: s.string().optional(),
+      language: s.enum([
+        "typescript",
+        "javascript",
+        "python",
+        "kotlin",
+        "java",
+        "none",
+      ]),
+    })
+    .transform(computedFields),
 });
 
 export default defineConfig({
@@ -46,7 +55,7 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { writing },
+  collections: { writing, work },
   mdx: {
     rehypePlugins: [
       rehypeSlug,
