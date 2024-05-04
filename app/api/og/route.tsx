@@ -1,5 +1,7 @@
 import { NextRequest } from "next/server";
 import { ImageResponse } from "next/og";
+import { RiCodeBoxFill } from "react-icons/ri";
+import { BsGithub, BsGlobe } from "react-icons/bs";
 
 export const runtime = "edge";
 
@@ -18,25 +20,31 @@ export async function GET(req: NextRequest) {
       return new Response("No title provided", { status: 500 });
     }
 
-    const heading =
-      title.length > 140 ? `${title.substring(0, 140)}...` : title;
+    const heading = title.length > 60 ? `${title.substring(0, 60)}...` : title;
 
     return new ImageResponse(
       (
         <div tw="flex relative flex-col p-12 w-full h-full items-start text-black bg-white">
           <div tw="flex items-center">
-            <p tw="ml-2 font-bold text-2xl">Shirookami</p>
+            <RiCodeBoxFill size={30} />
+            <p tw="text-sm">shirookami</p>
           </div>
           <div tw="flex flex-col flex-1 py-10">
             <div tw="flex text-xl uppercase font-bold tracking-tight font-normal">
-              POST
+              WRITING/
             </div>
             <div tw="flex text-[80px] font-bold text-[50px]">{heading}</div>
           </div>
-          <div tw="flex items-center w-full justify-between">
-            <div tw="flex text-xl">shirookami.vercel.app</div>
+          <div tw="flex items-center w-full">
+            <div tw="flex text-xl align-items:baseline">
+              <BsGlobe size={25} />
+              <div tw="ml-1">shirookami.vercel.app</div>
+            </div>
             <div tw="flex items-center text-xl">
-              <div tw="flex ml-2">https://github.com/AlfariziDwiPrasetyo</div>
+              <div tw="flex ml-5">
+                <BsGithub size={25} />
+                <div tw="ml-1">AlfariziDwiPrasetyo</div>
+              </div>
             </div>
           </div>
         </div>
