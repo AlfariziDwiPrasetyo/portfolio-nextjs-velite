@@ -1,0 +1,107 @@
+---
+title: How to implement darkmode in NextJS
+description: implement darkmode with next-theme 
+date: 2024-05-04
+published: true
+---
+
+## Installation
+
+The simple way to implement darkmode in nextjs is using library called `next-theme` so you need to install it first <br/>
+
+```bash
+npm i next-themes
+```
+
+## Setup
+
+in your `app/layout.jsx` import `ThemeProvider` from `next-themes` and wrap the children with `ThemeProvider`
+
+```jsx
+import { ThemeProvider } from 'next-themes'
+
+export default function Layout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <head />
+      <body>
+        <ThemeProvider 
+        enableSystem
+        defaultTheme="system"
+        disableTransitionOnChange
+        attribute="class"
+        >{children}</ThemeProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+you can change the default theme with `light` or `dark`
+
+
+ThemeProvider is a client component, not a server component and you need to add `suppressHydrationWarning` in your html because if not it will give you a warning.
+
+## CSS or Tailwind
+You need to config first to make darkmode enable
+
+### With CSS
+
+```css
+:root {
+  /* Your default theme */
+  --background: white;
+  --foreground: black;
+}
+
+[data-theme='dark'] {
+  --background: black;
+  --foreground: white;
+}
+```
+
+### With Tailwind 
+
+in your `tailwind.config.js` simply just set the darkMode property to `class`
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: 'class'
+}
+```
+
+## Usage
+
+
+```js
+import { useState, useEffect } from 'react'
+import { useTheme } from 'next-themes'
+
+const ThemeSwitch = () => {
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
+
+  return (
+    <select value={theme} onChange={e => setTheme(e.target.value)}>
+      <option value="system">System</option>
+      <option value="dark">Dark</option>
+      <option value="light">Light</option>
+    </select>
+  )
+}
+export default ThemeSwitch
+```
+
+remember to use `useEffect` to make sure it is rendered in client component, Because we cannot know the theme on the server, many of the values returned from `useTheme` will be `undefined` until mounted on the client. This means if you try to render UI based on the current theme before mounting on the client, you will see a hydration mismatch error.
+
+<br/>
+
+Thats it, you can check [this](https://github.com/pacocoursey/next-themes) for more information.

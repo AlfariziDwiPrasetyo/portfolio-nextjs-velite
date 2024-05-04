@@ -4,6 +4,7 @@ import { MDXContent } from "@/components/MdxComponent";
 import { notFound } from "next/navigation";
 import "@/styles/mdx.css";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface WorkPageProps {
   params: {
@@ -32,7 +33,12 @@ function page({ params }: WorkPageProps) {
   return (
     <article className="animated-element container mt-20 py-6 prose dark:prose-invert max-w-2xl mx-auto">
       <h1 className="mb-2 text-4xl sm:text-5xl font-bold">{post.title}</h1>
-      <Link href={`https://${post.link}`}>{post.link}</Link>
+      <Link
+        href={`https://${post.link}`}
+        className="no-underline hover:underline"
+      >
+        {post.link}
+      </Link>
       <div className="mt-20">
         <MDXContent code={post.body} />
       </div>

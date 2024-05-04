@@ -1,6 +1,7 @@
 import React from "react";
 import { work } from "#site/content";
 import WorkItem from "@/components/WorkItem";
+import ComingSoonWorkItem from "@/components/ComingSoonWorkITem";
 
 interface WorkPageProps {
   searchParams: {
@@ -20,7 +21,7 @@ function page({ searchParams }: WorkPageProps) {
             The project i created mostly created with javascript and typescript
           </p>
         </div>
-        {/* <div className="grid grid-cols-1 py-12 md:grid-cols-2 md:gap-2">
+        <div className="grid grid-cols-1 py-12 md:grid-cols-2 md:gap-2">
           {work.map((post) => (
             <WorkItem
               slug={post.slug}
@@ -30,10 +31,8 @@ function page({ searchParams }: WorkPageProps) {
               language={post.language}
             />
           ))}
-        </div> */}
-        <p className="text-center text-3xl mt-12">
-          This page is underdevelopment
-        </p>
+          <ComingSoonWorkItem />
+        </div>
       </div>
     </div>
   );
