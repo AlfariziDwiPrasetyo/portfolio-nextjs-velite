@@ -2,6 +2,7 @@ import { writing } from "#site/content";
 import { MDXContent } from "@/components/MdxComponent";
 import { formatDate } from "@/lib/utils";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import "@/styles/mdx.css";
 
 interface WritingPageProps {
@@ -14,6 +15,45 @@ async function getWritingFromParams(params: WritingPageProps["params"]) {
   const slug = params?.slug?.join("/");
   const post = writing.find((post) => post.slugAsParams === slug);
   return post;
+}
+
+export async function generateMetadata({
+  params,
+}: WritingPageProps): Promise<Metadata> {
+  const post = await getWritingFromParams(params);
+
+  if (!post) {
+    return {};
+  }
+
+  const ogSearchParams = new URLSearchParams();
+  ogSearchParams.set("title", post.title);
+
+  return {
+    title: post.title,
+    description: post.description,
+    authors: { name: "Al Farizi Dwi Prasetyo" },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      url: post.slug,
+      images: [
+        {
+          url: `/api/og?${ogSearchParams.toString()}`,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [`/api/og?${ogSearchParams.toString()}`],
+    },
+  };
 }
 
 export async function generateStaticParams(): Promise<
