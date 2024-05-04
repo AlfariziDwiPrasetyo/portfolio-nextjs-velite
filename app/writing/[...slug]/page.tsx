@@ -28,6 +28,7 @@ export async function generateMetadata({
 
   const ogSearchParams = new URLSearchParams();
   ogSearchParams.set("title", post.title);
+  ogSearchParams.set("type", "writing");
 
   return {
     title: post.title,

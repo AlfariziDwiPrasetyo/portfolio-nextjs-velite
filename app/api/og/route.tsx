@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = req.nextUrl;
     const title = searchParams.get("title");
+    const type = searchParams.get("type");
 
     if (!title) {
       return new Response("No title provided", { status: 500 });
@@ -31,9 +32,9 @@ export async function GET(req: NextRequest) {
           </div>
           <div tw="flex flex-col flex-1 py-10">
             <div tw="flex text-xl uppercase font-bold tracking-tight font-normal">
-              WRITING/
+              {type}/
             </div>
-            <div tw="flex text-[80px] font-bold text-[50px]">{heading}</div>
+            <div tw="flex font-bold text-[90px]">{heading}</div>
           </div>
           <div tw="flex items-center w-full">
             <div tw="flex text-xl align-items:baseline">
@@ -57,7 +58,7 @@ export async function GET(req: NextRequest) {
             name: "Inter",
             data: fontBold,
             style: "normal",
-            weight: 700,
+            weight: 400,
           },
         ],
       }

@@ -24,6 +24,7 @@ function page({ searchParams }: WorkPageProps) {
         <div className="grid grid-cols-1 py-12 md:grid-cols-2 md:gap-2">
           {work.map((post) => (
             <WorkItem
+              key={post.slug}
               slug={post.slug}
               title={post.title}
               description={post.description}

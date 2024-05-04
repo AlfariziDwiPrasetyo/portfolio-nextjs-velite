@@ -4,7 +4,7 @@ import { MDXContent } from "@/components/MdxComponent";
 import { notFound } from "next/navigation";
 import "@/styles/mdx.css";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
 
 interface WorkPageProps {
   params: {
@@ -12,11 +12,51 @@ interface WorkPageProps {
   };
 }
 
-const getWorkFromParams = (params: WorkPageProps["params"]) => {
+const getWorkFromParams = async (params: WorkPageProps["params"]) => {
   const slug = params?.slug?.join("/");
   const post = work.find((post) => post.slugAsParams === slug);
   return post;
 };
+
+export async function generateMetadata({
+  params,
+}: WorkPageProps): Promise<Metadata> {
+  const post = await getWorkFromParams(params);
+
+  if (!post) {
+    return {};
+  }
+
+  const ogSearchParams = new URLSearchParams();
+  ogSearchParams.set("type", "work");
+  ogSearchParams.set("title", post.title);
+
+  return {
+    title: post.title,
+    description: post.description,
+    authors: { name: "Al Farizi Dwi Prasetyo" },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      url: post.slug,
+      images: [
+        {
+          url: `/api/og?${ogSearchParams.toString()}`,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [`/api/og?${ogSearchParams.toString()}`],
+    },
+  };
+}
 
 export async function generateStaticParams(): Promise<
   WorkPageProps["params"][]
@@ -24,8 +64,8 @@ export async function generateStaticParams(): Promise<
   return work.map((post) => ({ slug: post.slugAsParams.split("/") }));
 }
 
-function page({ params }: WorkPageProps) {
-  const post = getWorkFromParams(params);
+async function page({ params }: WorkPageProps) {
+  const post = await getWorkFromParams(params);
   if (!post || !post.published) {
     notFound();
   }
