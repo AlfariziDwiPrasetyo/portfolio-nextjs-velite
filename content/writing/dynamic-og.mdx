@@ -1,6 +1,6 @@
 ---
 title: How to create dynamic og image in NextJS
-description: Create a dynamic og image with 2 steps
+description: Create a dynamic og image in nextjs using ImageResponse
 date: 2024-05-07
 published: true
 ---
@@ -125,7 +125,7 @@ export async function generateMetadata({
 
 if you are using typescript the type of params should be your dynamic data props and it return Promise.
 
-next you need to fetch your data inside the generateMetadata function, the `getWritingFromParams` is my function to get the writing data, and dont forget to error handling it if it doesnt return the data.
+next you need to fetch your data inside the `generateMetadata` function, the `getWritingFromParams` is my function to get the writing data, and dont forget to error handling it if it doesnt return the data.
 
 ```ts title="[dynamicPage].tsx"
  const post = await getWritingFromParams(params);
@@ -175,6 +175,21 @@ return {
       images: [`/api/og?${ogSearchParams.toString()}`],
     },
   };
+```
+
+## Insert the metadataBase
+
+in your `app/layout.tsx` insert metadataBase and the value should be your website link
+
+like this : 
+
+```ts title=""
+export const metadata: Metadata = {
+  title: "Shirookami",
+  description: "My personal web portfolio",
+  metadataBase: new URL("https://shirookami.vercel.app/"),
+};
+
 ```
 
 **Result :**
