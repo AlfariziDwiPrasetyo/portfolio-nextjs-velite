@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
             <div tw="flex text-xl uppercase font-bold tracking-tight font-normal">
               {type}/
             </div>
-            <div tw="flex font-bold text-[90px]">{heading}</div>
+            <div tw="flex font-bold text-[60px]">{heading}</div>
           </div>
           <div tw="flex items-center w-full">
             <div tw="flex text-xl align-items:baseline">

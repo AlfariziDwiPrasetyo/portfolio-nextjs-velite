@@ -1,0 +1,181 @@
+---
+title: How to create dynamic og image in NextJS
+description: Create a dynamic og image with 2 steps
+date: 2024-07-04
+published: true
+---
+
+**Open Graph (OG)** images are the images that displayed when your web page is shared on social media platforms like Facebook, Twitter, and LinkedIn. A good OG image can grab attention and drive traffic to your website.
+
+Next.js provides the ImageResponse feature that allows you to easily create dynamic OG images. Dynamic OG images can change based on your webpage content, such as title, description, and featured image.
+
+Lets make it !
+
+## Create an assets (optional)
+If you want to use a different font you need to download the font first and store it here `assets/fonts/{your_font}.ttf`
+
+## Create og route
+You need to create route `app/api/og/route.tsx` inside this route you can import the ImageResponse from next/og
+
+```tsx title="app/api/route.tsx"
+import { ImageResponse } from "next/og"
+
+export const runtime = "edge";
+```
+The Edge runtime is used for Middleware (routing rules like redirects, rewrites, and setting headers).
+
+if you have custom fonts you need to fetch it like this, you can skip this step if you dont have the custom fonts
+
+```ts title="app/api/route.tsx"
+const montserratBold = fetch(
+  new URL("../../../assets/fonts/Montserrat-Bold.ttf", import.meta.url)
+).then((res) => res.arrayBuffer());
+```
+
+create a `GET` request function 
+
+```tsx title="app/api/route.tsx"
+export async function GET(req: NextRequest) {
+  try {
+    const fontBold = await montserratBold;
+
+    const { searchParams } = req.nextUrl;
+    const title = searchParams.get("title");
+    const type = searchParams.get("type");
+
+    if (!title) {
+      return new Response("No title provided", { status: 500 });
+    }
+
+    const heading = title.length > 60 ? `${title.substring(0, 60)}...` : title;
+
+    return new ImageResponse();
+  } catch (error) {
+    return new Response("Failed to generate an image", { status: 500 });
+  }
+}
+```
+again if you have the custom fonts you need to await the font first, after that you need to get the `title` or `type` (`type` is optional) from the url, if the title is not found then it will return `"No title provided, {status: 500}"`. 
+
+If the title length exceeds 60 characters, the code truncates it to the first 60 characters and adds an ellipsis (...). This ensures the text fits comfortably within the image.
+
+Finally the route is returning an `ImageResponse()`, inside ImageResponse there is two parameters `(ReactElement, Option)`.
+
+The `ReactElement` is for styling your dynamic og image and the `Option` is for configure your image like the width, height and of course the fonts. ReactElement in ImageResponse is a bit different they dont use `className` instead they use `tw` 
+
+For example i created this `ImageResponse()` : 
+
+```tsx title="app/api/route.tsx"
+return new ImageResponse(
+      (
+        <div tw="flex relative flex-col p-12 w-full h-full items-start text-black bg-white">
+          <div tw="flex items-center">
+            <RiCodeBoxFill size={30} />
+            <p tw="text-sm">shirookami</p>
+          </div>
+          <div tw="flex flex-col flex-1 py-10">
+            <div tw="flex text-xl uppercase font-bold tracking-tight font-normal">
+              {type}/
+            </div>
+            <div tw="flex font-bold text-[60px]">{heading}</div>
+          </div>
+          <div tw="flex items-center w-full">
+            <div tw="flex text-xl align-items:baseline">
+              <BsGlobe size={25} />
+              <div tw="ml-1">shirookami.vercel.app</div>
+            </div>
+            <div tw="flex items-center text-xl">
+              <div tw="flex ml-5">
+                <BsGithub size={25} />
+                <div tw="ml-1">AlfariziDwiPrasetyo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      {
+        width: 1200,
+        height: 630,
+        fonts: [
+          {
+            name: "Inter",
+            data: fontBold,
+            style: "normal",
+            weight: 400,
+          },
+        ],
+      }
+    );
+```
+
+you can test or create an og image here [https://og-playground.vercel.app/] if you want, remember if you using tailwind its not 100% support it, there are few classes that is not supported yet 
+
+
+## Export dynamic metadata in your dynamic page 
+
+Next you need to export the generateMetadata
+
+```ts title="[dynamicPage].tsx"
+export async function generateMetadata({
+  params,
+}: WritingPageProps): Promise<Metadata> {
+
+}
+```
+
+if you are using typescript the type of params should be your dynamic data props and it return Promise.
+
+next you need to fetch your data inside the generateMetadata function, the `getWritingFromParams` is my function to get the writing data, and dont forget to error handling it if it doesnt return the data.
+
+```ts title="[dynamicPage].tsx"
+ const post = await getWritingFromParams(params);
+
+  if (!post) {
+    return {};
+  }
+```
+
+after that you need to create a new query to your searchParams 
+
+```ts title="[dynamicPage].tsx"
+const ogSearchParams = new URLSearchParams();
+ogSearchParams.set("title", post.title);
+ogSearchParams.set("type", "writing");
+```
+
+URLSearchParams is a built-in JavaScript class that provides methods and properties for working with query string parameters of a URL.
+
+`ogSearchParams.set("title", post.title)` This line is simply adds a new query parameter to the ogSearchParams object. The set() method of URLSearchParams is used to set a parameter's value. In this case, the parameter key is "title", and its value is obtained from the post.title variable. This is typically used to include dynamic data in the query string.
+
+and then just return the metadata 
+
+```tsx title="[dynamicPage].tsx"
+return {
+    title: post.title,
+    description: post.description,
+    authors: { name: "Al Farizi Dwi Prasetyo" },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      url: post.slug,
+      images: [
+        {
+          url: `/api/og?${ogSearchParams.toString()}`,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [`/api/og?${ogSearchParams.toString()}`],
+    },
+  };
+```
+
+**Result :**
+<Image src="https://drive.google.com/uc?id=1RON4yq9tpu2T5WjPeqaXKMjzld8qUYfg" width={600} height={600} />

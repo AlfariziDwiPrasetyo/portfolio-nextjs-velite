@@ -7,6 +7,15 @@ export default {
     config.plugins.push(new VeliteWebpackPlugin());
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "drive.google.com",
+        port: "",
+      },
+    ],
+  },
 };
 
 class VeliteWebpackPlugin {
