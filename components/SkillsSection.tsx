@@ -9,7 +9,7 @@ function SkillsSection() {
   return (
     <section className="mt-20">
       <h1 className="font-semibold text-3xl md:text-4xl">Skills</h1>
-      <div className="grid grid-cols-6">
+      <div className="grid grid-cols-4 md:grid-cols-6">
         <HoverCard>
           <HoverCardTrigger>
             {" "}

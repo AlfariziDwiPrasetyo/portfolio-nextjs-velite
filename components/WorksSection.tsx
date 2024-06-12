@@ -1,6 +1,8 @@
 import React from "react";
 import { work } from "#site/content";
 import WorkItem from "./WorkItem";
+import { MoveRight } from "lucide-react";
+import Link from "next/link";
 
 function WorksSection() {
   return (
@@ -18,6 +20,12 @@ function WorksSection() {
           />
         ))}
       </div>
+      <Link
+        href={"/work"}
+        className="flex justify-end no-underline items-center space-x-3"
+      >
+        <span className="mr-2">See all</span> <MoveRight size={20} />
+      </Link>
     </section>
   );
 }

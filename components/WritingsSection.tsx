@@ -2,6 +2,7 @@ import React from "react";
 import { writing } from "#site/content";
 import Link from "next/link";
 import { formatDate, sortWritingPosts } from "@/lib/utils";
+import { MoveRight } from "lucide-react";
 
 function WritingsSection() {
   const data = sortWritingPosts(writing.filter((post) => post.published));
@@ -18,7 +19,6 @@ function WritingsSection() {
                   <h2 className="font-medium">{title}</h2>
                 </Link>
                 <time dateTime={date}>{formatDate(date)}</time>
-
                 <p>{description}</p>
               </div>
             );
@@ -27,6 +27,12 @@ function WritingsSection() {
       ) : (
         <p>writing is not written yet</p>
       )}
+      <Link
+        href={"/writing"}
+        className="flex justify-end no-underline items-center"
+      >
+        <span className="mr-2">See all</span> <MoveRight size={20} />
+      </Link>
     </section>
   );
 }
