@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import SkillsSection from "./SkillsSection";
 import WorksSection from "./WorksSection";
+import WritingsSection from "./WritingsSection";
 
 function AboutMe() {
   return (
@@ -70,6 +71,7 @@ function AboutMe() {
       </div>
 
       <SkillsSection />
+      <WritingsSection />
       <WorksSection />
     </article>
   );
