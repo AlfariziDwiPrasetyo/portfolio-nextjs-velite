@@ -7,30 +7,31 @@ import {
 } from "react-icons/fa";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import SkillsSection from "./SkillsSection";
 
 function AboutMe() {
   return (
-    <div className="space-y-5 animated-element pattern-bg">
-      <h1 className="font-bold text-3xl md:text-4xl tracking-tight">
-        Alfarizi Dwi Prasetyo
+    <article className="animated-element container py-6 prose dark:prose-invert max-w-2xl mx-auto">
+      <h1 className="font-semibold text-3xl md:text-4xl tracking-tight">
+        Hi, I'm Alfarizi Dwi Prasetyo 👋
       </h1>
-      <h2 className="text-xl md:text-2xl tracking-tighter font-semibold">
-        Web Developer
-      </h2>
+
       <p className="tracking-tight text-md md:text-lg">
-        Hi there, I'm Tiyo a college student with a growing passion for
-        programming, coffee, and music. As a dedicated Manchester United fan, I
-        appreciate loyalty and perseverance, both on and off the field. As I
-        develop my programming skills, I love exploring innovative solutions and
-        staying current in the ever-evolving tech industry. Eager to learn and
-        grow, I infuse{" "}
-        <Link href={"/work"}>
-          <span className="underline font-bold decoration-sky-500">
-            my work
-          </span>
-        </Link>{" "}
-        with a unique blend of creativity, technical knowledge.
+        I'm junior software engineer from indonesia.
       </p>
+      <p className="tracking-tight text-md md:text-lg">
+        Lost in melodies 🎵 with a cup of coffee ☕ is my routine activity.
+      </p>
+      <p className="tracking-tight text-md md:text-lg">
+        I also love to watch anime or TV series in the middle of the night 🌙.
+        (if there is no{" "}
+        <span className="text-pink-700 font-medium">Manchester United</span>{" "}
+        match)
+      </p>
+      <p className="tracking-tight text-md md:text-lg">
+        <span className="font-bold text-pink-700">#GGMU</span>
+      </p>
+
       <div className="flex space-x-2">
         <Link
           aria-label="my facebook link"
@@ -65,7 +66,9 @@ function AboutMe() {
           </Button>
         </Link>
       </div>
-    </div>
+
+      <SkillsSection />
+    </article>
   );
 }
 
