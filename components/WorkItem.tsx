@@ -26,12 +26,21 @@ function WorkItem({ title, description, link, language, slug }: WorkitemProps) {
     <Card className="hover:border-primary w-full mb-3 sm:mb-2 md:mb-0 max-w-full">
       <CardHeader>
         <CardTitle>
-          <Link href={slug}>{title}</Link>
+          <Link className="no-underline hover:underline" href={slug}>
+            {title}
+          </Link>
         </CardTitle>
 
         <CardDescription className="hover:underline hover:hover-1 flex">
-          <Link href={`https://${link}`}>{link}</Link>
-          {link ? <MdArrowOutward className="w-3 h-3" /> : null}
+          <Link
+            className="no-underline hover:underline"
+            href={`https://${link}`}
+          >
+            Github
+          </Link>
+          {link ? (
+            <MdArrowOutward className="w-3 h-3 no-underline ml-1" />
+          ) : null}
         </CardDescription>
       </CardHeader>
       <CardContent className="h-20">
