@@ -8,6 +8,7 @@ import {
 import { Button } from "./ui/button";
 import Link from "next/link";
 import SkillsSection from "./SkillsSection";
+import WorksSection from "./WorksSection";
 
 function AboutMe() {
   return (
@@ -32,12 +33,13 @@ function AboutMe() {
         <span className="font-bold text-pink-700">#GGMU</span>
       </p>
 
+      <p className="mt-10">Find me on</p>
       <div className="flex space-x-2">
         <Link
           aria-label="my facebook link"
           href={"https://www.facebook.com/shirookam/"}
         >
-          <Button aria-label="facebook button" variant={"ghost"}>
+          <Button aria-label="facebook button" variant={"outline"}>
             <FaFacebookF size={20} />
           </Button>
         </Link>
@@ -45,7 +47,7 @@ function AboutMe() {
           aria-label="my instagram link"
           href={"https://www.instagram.com/alfariziiprasetyo/"}
         >
-          <Button aria-label="instagram button" variant={"ghost"}>
+          <Button aria-label="instagram button" variant={"outline"}>
             <FaInstagram size={20} />
           </Button>
         </Link>
@@ -53,7 +55,7 @@ function AboutMe() {
           aria-label="my linkedin link"
           href={"https://www.linkedin.com/in/al-farizi-dwi-prasetyo-29a310197/"}
         >
-          <Button aria-label="linkedin button" variant={"ghost"}>
+          <Button aria-label="linkedin button" variant={"outline"}>
             <FaLinkedinIn size={20} />
           </Button>
         </Link>
@@ -61,13 +63,14 @@ function AboutMe() {
           aria-label="my github link"
           href={"https://github.com/AlfariziDwiPrasetyo"}
         >
-          <Button aria-label="github button" variant={"ghost"}>
+          <Button aria-label="github button" variant={"outline"}>
             <FaGithub size={20} />
           </Button>
         </Link>
       </div>
 
       <SkillsSection />
+      <WorksSection />
     </article>
   );
 }
