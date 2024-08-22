@@ -8,7 +8,7 @@ function WorksSection() {
   return (
     <section className="mt-20">
       <h1 className="font-semibold text-3xl md:text-4xl">Works</h1>
-      <div className="grid grid-cols-1 py-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-3 py-12">
         {work.map((post) => (
           <WorkItem
             key={post.slug}

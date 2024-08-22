@@ -61,11 +61,11 @@ function WorkItem({ title, description, link, stacks, slug }: WorkitemProps) {
           ) : null}
         </CardDescription>
       </CardHeader>
-      <CardContent className="h-20">
+      <CardContent className="">
         {description ? <p>{truncateText(description, 80)}</p> : null}
       </CardContent>
-      <CardFooter className=" justify-end">
-        <div className="flex items-center space-x-2">
+      <CardFooter className="justify-end">
+        <div className="flex items-center md:pt-2 space-x-2">
           {stacks?.map((stack) => {
             return <div key={stack}>{iconMapping[stack] || null}</div>;
           })}
