@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import "@/styles/mdx.css";
 import Link from "next/link";
 import { Metadata } from "next";
+import { MdArrowOutward } from "react-icons/md";
 
 interface WorkPageProps {
   params: {
@@ -73,12 +74,15 @@ async function page({ params }: WorkPageProps) {
   return (
     <article className="animated-element container mt-20 py-6 prose dark:prose-invert max-w-2xl mx-auto">
       <h1 className="mb-2 text-4xl sm:text-5xl font-bold">{post.title}</h1>
-      <Link
-        href={`https://${post.link}`}
-        className="no-underline hover:underline"
-      >
-        {post.link}
-      </Link>
+      <div className="py-2 flex items-center">
+        <Link
+          href={`https://${post.link}`}
+          className="no-underline hover:underline"
+        >
+          Github
+        </Link>
+        <MdArrowOutward className="w-3 h-3 no-underline ml-1" />
+      </div>
       <div className="mt-20">
         <MDXContent code={post.body} />
       </div>
