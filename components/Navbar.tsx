@@ -57,7 +57,7 @@ function Navbar() {
               pathname === "/writing" ? "text-foreground" : "text-foreground/60"
             )}
           >
-            Writing
+            Writings
           </Link>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
