@@ -29,7 +29,7 @@ function page({ searchParams }: WorkPageProps) {
               title={post.title}
               description={post.description}
               link={post.link}
-              language={post.language}
+              stacks={post.stacks}
             />
           ))}
           <ComingSoonWorkItem />

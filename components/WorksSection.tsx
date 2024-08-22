@@ -16,7 +16,7 @@ function WorksSection() {
             title={post.title}
             description={post.description}
             link={post.link}
-            language={post.language}
+            stacks={post.stacks}
           />
         ))}
       </div>
