@@ -34,14 +34,7 @@ const work = defineCollection({
       published: s.boolean().default(true),
       body: s.mdx(),
       link: s.string().optional(),
-      language: s.enum([
-        "typescript",
-        "javascript",
-        "python",
-        "kotlin",
-        "java",
-        "none",
-      ]),
+      stack: s.string().array(),
     })
     .transform(computedFields),
 });
