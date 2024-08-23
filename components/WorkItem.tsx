@@ -39,7 +39,6 @@ const iconMapping: Record<any, JSX.Element> = {
 };
 
 function WorkItem({ title, description, link, stacks, slug }: WorkitemProps) {
-  console.log({ stacks });
   return (
     <Card className="hover:border-primary w-full mb-2 sm:mb-2 md:mb-0 max-w-full">
       <CardHeader>

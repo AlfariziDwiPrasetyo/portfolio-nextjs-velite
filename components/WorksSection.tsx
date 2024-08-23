@@ -20,12 +20,12 @@ function WorksSection() {
           />
         ))}
       </div>
-      <Link
-        href={"/work"}
-        className="flex justify-end no-underline items-center space-x-3"
-      >
-        <span className="mr-2">See all</span> <MoveRight size={20} />
-      </Link>
+      <div className="flex justify-end items-center">
+        <Link href={"/work"} className="mr-2 no-underline">
+          See all
+        </Link>{" "}
+        <MoveRight size={20} />
+      </div>
     </section>
   );
 }

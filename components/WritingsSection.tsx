@@ -27,12 +27,12 @@ function WritingsSection() {
       ) : (
         <p>writing is not written yet</p>
       )}
-      <Link
-        href={"/writing"}
-        className="flex justify-end no-underline items-center"
-      >
-        <span className="mr-2">See all</span> <MoveRight size={20} />
-      </Link>
+      <div className="flex justify-end items-center">
+        <Link href={"/writing"} className="mr-2 no-underline">
+          See all
+        </Link>{" "}
+        <MoveRight size={20} />
+      </div>
     </section>
   );
 }
