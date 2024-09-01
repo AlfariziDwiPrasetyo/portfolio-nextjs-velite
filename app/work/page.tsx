@@ -30,6 +30,7 @@ function page({ searchParams }: WorkPageProps) {
               description={post.description}
               link={post.link}
               stacks={post.stacks}
+              image={post.image}
             />
           ))}
           <ComingSoonWorkItem />

@@ -30,6 +30,7 @@ const work = defineCollection({
     .object({
       slug: s.path(),
       title: s.string().max(999),
+      image: s.string(),
       description: s.string().max(999).optional(),
       published: s.boolean().default(true),
       body: s.mdx(),

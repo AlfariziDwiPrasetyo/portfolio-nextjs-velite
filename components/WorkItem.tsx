@@ -19,12 +19,14 @@ import MongodbIcon from "@/lib/stacks/MongodbIcon";
 import NestjsIcon from "@/lib/stacks/NestjsIcon";
 import TailwindIcon from "@/lib/stacks/TailwindIcon";
 import ZodIcon from "@/lib/stacks/ZodIcon";
+import Image from "next/image";
 
 interface WorkitemProps {
   title: string;
   description?: string;
   link?: string;
   stacks: string[];
+  image?: string;
   slug: string;
 }
 
@@ -38,12 +40,30 @@ const iconMapping: Record<any, JSX.Element> = {
   zod: <ZodIcon />,
 };
 
-function WorkItem({ title, description, link, stacks, slug }: WorkitemProps) {
+function WorkItem({
+  title,
+  image,
+  description,
+  link,
+  stacks,
+  slug,
+}: WorkitemProps) {
+  console.log(image);
   return (
     <Card className="hover:border-primary w-full mb-2 sm:mb-2 md:mb-0 max-w-full">
-      <CardHeader>
+      <CardHeader className="px-6 py-0">
+        {image && (
+          <Image
+            src={`/project/${image}`}
+            alt={`${title} image`}
+            width={1000}
+            height={1000}
+            className="pb-5"
+          />
+        )}
+
         <CardTitle>
-          <Link className="no-underline hover:underline" href={slug}>
+          <Link className="no-underline mt-10 hover:underline" href={slug}>
             {title}
           </Link>
         </CardTitle>
@@ -60,7 +80,7 @@ function WorkItem({ title, description, link, stacks, slug }: WorkitemProps) {
           ) : null}
         </CardDescription>
       </CardHeader>
-      <CardContent className="">
+      <CardContent>
         {description ? <p>{truncateText(description, 80)}</p> : null}
       </CardContent>
       <CardFooter className="justify-end">

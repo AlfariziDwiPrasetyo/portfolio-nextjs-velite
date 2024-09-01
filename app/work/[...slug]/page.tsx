@@ -6,6 +6,7 @@ import "@/styles/mdx.css";
 import Link from "next/link";
 import { Metadata } from "next";
 import { MdArrowOutward } from "react-icons/md";
+import Image from "next/image";
 
 interface WorkPageProps {
   params: {
@@ -83,6 +84,12 @@ async function page({ params }: WorkPageProps) {
         </Link>
         <MdArrowOutward className="w-3 h-3 no-underline ml-1" />
       </div>
+      <Image
+        width={1000}
+        height={1000}
+        alt="banner"
+        src={`/project/${post.image}`}
+      />
       <div className="mt-20">
         <MDXContent code={post.body} />
       </div>
