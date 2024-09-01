@@ -10,15 +10,17 @@ function WritingsSection() {
     <section className="mt-20">
       <h1 className="font-semibold text-3xl md:text-4xl">Writings</h1>
       {data?.length > 0 ? (
-        <div className="flex flex-col">
+        <div>
           {data.map((writing) => {
             const { title, date, slug, description } = writing;
             return (
               <div className="mt-3" key={slug}>
                 <Link className="no-underline" href={slug}>
-                  <h2 className="font-medium">{title}</h2>
+                  <h2 className="font-medium mb-2">{title}</h2>
                 </Link>
-                <time dateTime={date}>{formatDate(date)}</time>
+                <time dateTime={date} className="font-semibold">
+                  {formatDate(date)}
+                </time>
                 <p>{description}</p>
               </div>
             );
