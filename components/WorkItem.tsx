@@ -51,7 +51,7 @@ function WorkItem({
   console.log(image);
   return (
     <Card className="hover:border-primary w-full mb-2 sm:mb-2 md:mb-0 max-w-full">
-      <CardHeader className="px-6 py-0">
+      <CardHeader>
         {image && (
           <Image
             src={`/project/${image}`}
