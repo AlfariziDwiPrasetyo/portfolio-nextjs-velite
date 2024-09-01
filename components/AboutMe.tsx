@@ -7,9 +7,6 @@ import {
 } from "react-icons/fa";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import SkillsSection from "./SkillsSection";
-import WorksSection from "./WorksSection";
-import WritingsSection from "./WritingsSection";
 
 function AboutMe() {
   return (
@@ -21,6 +18,7 @@ function AboutMe() {
       <p className="tracking-tight text-md md:text-lg">
         I'm junior software engineer from indonesia.
       </p>
+
       <p className="tracking-tight text-md md:text-lg">
         Lost in melodies 🎵 with a cup of coffee ☕ is my routine activity.
       </p>
@@ -69,10 +67,6 @@ function AboutMe() {
           </Button>
         </Link>
       </div>
-
-      <SkillsSection />
-      <WritingsSection />
-      <WorksSection />
     </article>
   );
 }

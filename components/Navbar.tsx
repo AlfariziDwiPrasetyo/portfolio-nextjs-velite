@@ -25,7 +25,7 @@ function Navbar() {
 
   return (
     <header
-      className={`z-10 sticky top-0 w-full border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-backgroud/60 border-b`}
+      className={`z-10 sticky top-0 w-full border-border bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-backgroud/60 border-b`}
     >
       <div className="container flex h-14 max-w-screen-2xl items-center md:px-36">
         <nav className="flex items-center space-x-4 lg:space-x-6">
