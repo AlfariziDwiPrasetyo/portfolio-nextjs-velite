@@ -1,24 +1,41 @@
 import React from "react";
 import { work } from "#site/content";
-import WorkItem from "./WorkItem";
 import { MoveRight } from "lucide-react";
 import Link from "next/link";
+import { MdArrowOutward } from "react-icons/md";
+import { Button } from "./ui/button";
+import { iconMapping } from "./WorkItem";
 
 function WorksSection() {
   return (
     <section className="mt-20">
-      <h1 className="font-semibold text-3xl md:text-4xl">Works</h1>
-      <div className="grid grid-cols-1 md:gap-3 py-12">
-        {work.map((post) => (
-          <WorkItem
-            key={post.slug}
-            slug={post.slug}
-            title={post.title}
-            description={post.description}
-            link={post.link}
-            stacks={post.stacks}
-            image={post.image}
-          />
+      <h2 className="font-semibold text-3xl md:text-4xl">Works</h2>
+      <div className="pt-4 pb-10">
+        {work.map((project) => (
+          <div className="w-full">
+            <h3>
+              <a href={project.slug} className="no-underline">
+                {project.title}
+              </a>
+            </h3>
+            <div className="flex items-center">
+              <Link
+                className="no-underline hover:underline"
+                href={`https://${project.link}`}
+              >
+                Github
+              </Link>
+              {project.link ? (
+                <MdArrowOutward className="w-3 h-3 no-underline ml-1" />
+              ) : null}
+            </div>
+            <p>{project.description}</p>
+            <div className="flex justify-end items-center md:pt-2 space-x-2">
+              {project.stacks?.map((stack) => {
+                return <div key={stack}>{iconMapping[stack] || null}</div>;
+              })}
+            </div>
+          </div>
         ))}
       </div>
       <div className="flex justify-end items-center">

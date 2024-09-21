@@ -30,7 +30,7 @@ interface WorkitemProps {
   slug: string;
 }
 
-const iconMapping: Record<any, JSX.Element> = {
+export const iconMapping: Record<any, JSX.Element> = {
   nextjs: <NextjsIcon />,
   mongodb: <MongodbIcon />,
   nestjs: <NestjsIcon />,

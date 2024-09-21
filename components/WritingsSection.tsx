@@ -8,7 +8,7 @@ function WritingsSection() {
   const data = sortWritingPosts(writing.filter((post) => post.published));
   return (
     <section className="mt-20">
-      <h1 className="font-semibold text-3xl md:text-4xl">Writings</h1>
+      <h2 className="font-semibold text-3xl md:text-4xl">Writings</h2>
       {data?.length > 0 ? (
         <div>
           {data.map((writing) => {
@@ -16,7 +16,7 @@ function WritingsSection() {
             return (
               <div className="mt-3" key={slug}>
                 <Link className="no-underline" href={slug}>
-                  <h2 className="font-medium mb-2">{title}</h2>
+                  <h3 className="font-medium mb-2">{title}</h3>
                 </Link>
                 <time dateTime={date} className="font-semibold">
                   {formatDate(date)}
