@@ -28,7 +28,7 @@ export default function RootLayout({
         )}
       >
         <Provider>
-          <div className="relative flex max-w-screen-sm md:max-w-screen-2xl min-h-dvh flex-col bg-background">
+          <div className="relative flex min-h-dvh flex-col bg-background">
             <Navbar />
             <main className="flex-1 md:px-28 lg:px-36">{children}</main>
             <Footer />
