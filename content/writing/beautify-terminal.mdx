@@ -1,0 +1,118 @@
+---
+title: Beautify your terminal in Linux
+description: Beautify your terminal using Starship
+date: 2024-09-27
+published: true
+---
+
+## Prerequisites 
+- You need the Kitty terminal (optional actually), you can check the Kitty docs for how to install it in your device [here](https://sw.kovidgoyal.net/kitty/).
+- Check your shell by writing this command in your terminal:
+
+    ```bash
+    echo $0
+    ```
+    or
+    ```bash
+    echo $SHELL
+    ```
+
+## Download and install Nerd fonts
+Download and install [Nerd Fonts](https://www.nerdfonts.com/) in your terminal. Here's how you install fonts in Kitty:
+    1. Unzip the file.
+    2. Move your `.ttf` files to `~/.local/share/fonts` (create this directory if it doesn’t exist).
+    3. Type `fc-cache -f -v` to refresh the font cache.
+    4. Open Kitty's configuration file:
+        ```bash
+        nano ~/.config/kitty/kitty.conf
+        ```
+        or use VSCode if you prefer:
+        ```bash
+        code ~/.config/kitty/kitty.conf
+        ```
+    5. Add the following line to set the fonts (for example, if you're using MesloLGS NF)
+        ```conf
+        font_family MesloLGS NF
+        ```
+
+
+
+## Install Starship Prompt
+After setting up the fonts and terminal, the next step is to install the **Starship** prompt.
+
+1. Install Starship by running the following command:
+
+    ```bash
+    curl -sS https://starship.rs/install.sh | sh
+    ```
+
+2. Add the following line to your shell configuration file depending on the shell you use:
+
+    - For **Bash**, add this to `~/.bashrc`:
+    ```bash
+    eval "$(starship init bash)"
+    ```
+
+    - For **Zsh**, add this to `~/.zshrc`:
+    ```bash
+    eval "$(starship init zsh)"
+    ```
+
+3. Restart your terminal or source the configuration file:
+    ```bash
+    source ~/.bashrc  # For Bash
+    source ~/.zshrc   # For Zsh
+    ```
+
+
+
+
+## Customize Starship Configuration
+Starship’s configuration is stored in a file located at `~/.config/starship.toml`. Here's how you can create and modify it:
+
+1. Create the configuration file:
+    ```bash
+    mkdir -p ~/.config && touch ~/.config/starship.toml
+    ```
+
+2. Open the file in an editor like Nano or VSCode:
+    ```bash
+    nano ~/.config/starship.toml
+    ```
+    or
+    ```bash
+    code ~/.config/starship.toml
+    ```
+
+3. Add some basic configurations. For example:
+
+    ```toml
+    [prompt]
+    # Change the prompt symbol
+    symbol = "❯"
+
+    [character]
+    success_symbol = "[✔](bold green)"
+    error_symbol = "[✘](bold red)"
+
+    [battery]
+    # Display battery status only when charging or discharging
+    display = "auto"
+    ```
+
+## Test Your Terminal
+Now that everything is set up, open a new terminal window and check the new prompt, fonts, and symbols. 
+
+If you want to further tweak the appearance, explore more advanced Starship configurations in the [official Starship documentation](https://starship.rs/config/).
+
+also if you are lazy to tweak by yourself there is a preset that starship already create [here](https://starship.rs/presets/)
+
+
+## The Config im using
+<Image src="https://drive.google.com/uc?id=1H-PL_2yVVx-LO1-r5H2X5X5w8gml5iAH" width={600} height={600} />
+
+you need to install the catpuccin-mocha theme for kitty first [here](https://github.com/catppuccin/kitty)
+
+then type this command ``starship preset gruvbox-rainbow -o ~/.config/starship.toml`` to test the preset first
+
+and copy [this](https://github.com/typecraft-dev/dotfiles/blob/master/starship/.config/starship.toml) config and paste it to your ``starship.toml`` file
