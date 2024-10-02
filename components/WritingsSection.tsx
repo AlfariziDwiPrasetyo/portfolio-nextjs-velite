@@ -14,14 +14,14 @@ function WritingsSection() {
           {data.map((writing) => {
             const { title, date, slug, description } = writing;
             return (
-              <div className="mt-3" key={slug}>
-                <Link className="no-underline" href={slug}>
-                  <h3 className="font-medium mb-2">{title}</h3>
-                </Link>
-                <time dateTime={date} className="font-semibold">
+              <div className="mt-12 flex-col" key={slug}>
+                <time dateTime={date}>
                   {formatDate(date)}
                 </time>
-                <p>{description}</p>
+                <Link className="no-underline" href={slug}>
+                  <h3 className="text-2xl font-semibold mt-2">{title}</h3>
+                </Link>
+                <p className="mt-2">{description}</p>
               </div>
             );
           })}
