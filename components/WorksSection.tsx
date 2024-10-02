@@ -12,10 +12,10 @@ function WorksSection() {
       <h2 className="font-semibold text-3xl md:text-4xl">Works</h2>
       <div className="pt-4 pb-10">
         {work.map((project) => (
-          <div className="w-full">
+          <div className="w-full border-2 mb-5 p-5  border-primary rounded-md">
             <h3>
-              <a href={project.slug} className="no-underline">
-                {project.title}
+              <a href={project.slug} className="no-underline text-2xl font-semibold">
+                    {project.title}
               </a>
             </h3>
             <div className="flex items-center">
