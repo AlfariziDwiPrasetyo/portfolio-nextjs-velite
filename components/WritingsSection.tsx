@@ -11,13 +11,11 @@ function WritingsSection() {
       <h2 className="font-semibold text-3xl md:text-4xl">Writings</h2>
       {data?.length > 0 ? (
         <div>
-          {data.map((writing) => {
+          {data.slice(0, 3).map((writing) => {
             const { title, date, slug, description } = writing;
             return (
               <div className="mt-12 flex-col" key={slug}>
-                <time dateTime={date}>
-                  {formatDate(date)}
-                </time>
+                <time dateTime={date}>{formatDate(date)}</time>
                 <Link className="no-underline" href={slug}>
                   <h3 className="text-2xl font-semibold mt-2">{title}</h3>
                 </Link>
