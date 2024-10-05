@@ -1,0 +1,357 @@
+---
+title: Integrating Auth.js OAuth with Mongodb
+description: Integrating Auth.js OAuth with Mongodb for user management
+date: 2024-10-6
+published: true
+---
+
+In this tutorial, we’ll be combining the power of Auth.js and Google OAuth to enable seamless logins for your users, while securely storing their data in MongoDB 🛡️.
+
+But wait—before we dive into the code, make sure you have these essential secret keys at the ready:
+
+```
+AUTH_GOOGLE_ID =
+AUTH_GOOGLE_SECRET =
+MONGODB_URI =
+```
+
+You can check [this](https://youtu.be/OKMgyF5ezFs?si=QNOZyyDbJWAi-D3-) video on how to get the `GOOGLE CLIENT ID` and `GOOGLE CLIENT SECRET`, and kindly check [this](https://authjs.dev/getting-started/authentication/oauth) out too for the callback URI
+
+Now we can get started
+
+# Installing Auth.js
+
+## Start by installing the appropriate package
+
+```bash
+npm install next-auth@beta
+```
+
+## Setup environment
+
+The only environment variable that is mandatory is the `AUTH_SECRET`. This is a random value used by the library to encrypt tokens and email verification hashes. (See [Deployment](https://authjs.dev/getting-started/deployment) to learn more). You can generate one via the official Auth.js CLI running:
+
+```bash
+npx auth secret
+```
+
+This will also add it to your .env file, respecting the framework conventions (eg.: Next.js’ .env.local).
+
+## Configure
+
+Next, create the Auth.js config file and object. This is where you can control the behaviour of the library and specify custom authentication logic, adapters, etc. We recommend all frameworks to create an `auth.ts` file in the project. In this file we’ll pass in all the options to the framework specific initalization function and then export the route handler(s), signin and signout methods, and more.
+
+- Start by creating a new `auth.ts` file at the root of your app with the following content.
+
+  ```ts title="/auth.ts"
+  import NextAuth from "next-auth";
+
+  export const { handlers, signIn, signOut, auth } = NextAuth({
+    providers: [],
+  });
+  ```
+
+- Add a Route Handler under `/app/api/auth/[...nextauth]/route.ts`.
+
+  ```ts title="/app/api/auth/[...nextauth]/route.ts"
+  import { handlers } from "@/auth"; // Referring to the auth.ts we just created
+  export const { GET, POST } = handlers;
+  ```
+
+- Add optional Middleware to keep the session alive, this will update the session expiry every time its called.
+
+  ```ts title="/middleware.ts"
+  export { auth as middleware } from "@/auth";
+  ```
+
+# Setup Auth.js provider
+
+Let’s enable Google as a sign in option in our Auth.js configuration. You’ll have to import the Google provider from the package and pass it to the providers array we setup earlier in the Auth.js config file:
+
+In Next.js we recommend setting up your configuration in a file in the root of your repository, like at `auth.ts`.
+
+```ts title="/auth.js"
+import NextAuth from "next-auth";
+import Google from "next-auth/providers/google";
+
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  providers: [Google],
+});
+```
+
+Add the `handlers` which `NextAuth` returns to your `api/auth/[...nextauth]/route.ts` file so that Auth.js can run on any incoming request.
+
+```ts title="api/auth/[...nextauth]/route.ts"
+import { handlers } from "@/auth";
+export const { GET, POST } = handlers;
+```
+
+Create button component to trigger Auth.js sign in when clicked.
+
+```tsx title="/components/sign-in.tsx"
+import { signIn } from "@/auth";
+
+export default function SignIn() {
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await signIn("google");
+      }}
+    >
+      <button type="submit">Signin with Google</button>
+    </form>
+  );
+}
+```
+
+Click the “Sign in with Google" button and if all went well, you should be redirected to Google and once authenticated, redirected back to the app!
+
+# Setup MongoDB
+
+## Install Mongoose
+
+You need to install Mongoose in a Next.js project when working with MongoDB because Mongoose provides a powerful abstraction for interacting with MongoDB databases.
+
+```bash
+npm install mongoose
+```
+
+## Creating MongoDB Connection
+
+In the `/lib/database/index.ts` file, we’ll set up the connection to MongoDB using Mongoose. This code ensures that our application reuses the same connection, which is especially important in serverless environments like Next.js to avoid performance issues.
+
+```ts title="/lib/database/index.ts"
+import mongoose from "mongoose";
+
+const MONGODB_URI = process.env.MONGODB_URI;
+
+let cached = (global as any).mongoose || { conn: null, promise: null };
+
+export const connectMongo = async () => {
+  if (cached.conn) return cached.conn;
+
+  if (!MONGODB_URI) throw new Error("MONGODB_URI is missing");
+
+  cached.promise =
+    cached.promise ||
+    mongoose.connect(MONGODB_URI, {
+      dbName: "folioart",
+      bufferCommands: false,
+    });
+
+  cached.conn = await cached.promise;
+
+  return cached.conn;
+};
+};
+```
+
+- **MONGODB_URI**: This is the URI for your MongoDB database, which you’ll typically store in environment variables for security.
+- **Connection Caching**: We are caching the connection (`cached.conn`) to ensure it’s reused across multiple requests, avoiding excessive connection overhead.
+- **Database Name**: In this case, we are using `folioart` as the database name, but you can change it to whatever fits your project.
+
+## Creating Model User
+
+Next, we’ll define a **User** model using Mongoose. This will allow us to create, retrieve, and manipulate user data in the database.
+
+```ts "/lib/database/models/user.model.ts"
+import mongoose, { Schema, model, models } from "mongoose";
+
+export interface IUser {
+  _id?: string;
+  email: string;
+  username: string;
+  name: string;
+  photo: string;
+}
+
+const UserSchema = new Schema({
+  email: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  photo: { type: String, required: true },
+});
+
+const User = models?.User || model("User", UserSchema);
+
+export default User;
+```
+
+- **User Schema**: We define the schema for our User model with fields like email, username, name, and photo.
+- **Unique Constraints**: Both email and username are set to be unique, ensuring that no two users can share the same email or username.
+
+## Creating a New User
+
+Now, we’ll create a function to handle the creation of a new user in our database. This function will check if the user already exists based on their email or username. If they don't exist, a new user is created.
+
+```ts title="/lib/actions/user.actions.ts"
+import { connectMongo } from "../database";
+import User, { IUser } from "../database/models/user.model";
+import { revalidatePath } from "next/cache";
+
+export const createUser = async (user: IUser) => {
+  try {
+    await connectMongo();
+    const existingUser = await User.findOne({
+      $or: [{ email: user.email }, { username: user.username }],
+    });
+
+    if (existingUser) {
+      return null;
+    }
+
+    const newUser = await User.create(user);
+    return JSON.parse(JSON.stringify(newUser));
+  } catch (error) {
+    console.error(error);
+  }
+};
+```
+
+- **Connecting to MongoDB**: We use the connectMongo function to ensure the connection is established.
+- **Checking for Existing User**: Before creating a new user, we check if one already exists with the same email or username.
+- **Returning the New User**: If the user is successfully created, we return the new user data.
+
+# Integrating Auth.js OAuth with MongoDB
+
+Now that you have your MongoDB set up, let’s bring in authentication using NextAuth.js. Specifically, we’ll configure Google OAuth as the login provider and store the user data in MongoDB.
+
+## Set Up Google as an Authenticator Provider
+
+Let’s start by configuring Google OAuth as the provider in Auth.js. This will enable your users to log in using their Google account credentials.
+
+Update your `auth.ts`
+
+```ts title="/auth.ts" {2,5-8}
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+  ]
+)}
+```
+
+- **GoogleProvider**: This sets up Google as the authentication provider. You need to provide the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` (which should be in your environment variables).
+
+## Handling User Login with Callbacks
+
+Now, we’ll dive into callbacks. These functions handle what happens after a user signs in—like creating a user in MongoDB and adding user data to the session.
+
+```ts title="/auth.ts" {3-4, 13-33}
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import { createUser } from "./lib/actios/user.actions";
+import { IUser } from "./lib/database/models/user.model";
+
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+  ],
+  callbacks: {
+    async signIn({ user, profile, account }) {
+      if (user) {
+        const { id, name, email, image } = user;
+        const newUser: IUser = {
+          username: id ?? "",
+          name: name ?? "",
+          email: email ?? "",
+          photo: image ?? "",
+        };
+        const newUserCreated = await createUser(newUser);
+        console.log(newUserCreated);
+      }
+      return true; // Allow login
+    },
+    async session({ session, token, user }) {
+      // Add user info to session
+      session.user = user;
+      return session;
+    },
+  },
+});
+```
+
+- **signIn Callback**: This function runs when a user signs in using Google. It extracts user details (`id`, `name`, `email`, `image`), creates a new user object, and saves it to MongoDB via the `createUser` function.
+
+  - If the user already exists, it won’t create a new user.
+  - The function returns true, allowing the login process to complete.
+
+- **session Callback**: This function adds the user’s data to the session object, making it available across your app.
+
+# Testing
+
+Now that we’ve set up Auth.js with Google OAuth and configured MongoDB to store user data, let’s test the integration to ensure everything works as expected.
+
+We’ll create a simple page that:
+
+    - Authenticates the user: If the user is signed in, it will display their session data.
+    - Handles Sign Out: It will allow the user to sign out using a simple button.
+
+## Create sign-out button
+
+First we need to create sign-out button
+
+```tsx title="/components/sign-out.tsx"
+import { signOut } from "@/auth";
+
+export function SignOut() {
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await signOut({ redirectTo: "/" });
+      }}
+    >
+      <button type="submit">Sign Out</button>
+    </form>
+  );
+}
+```
+
+## Create a Homepage
+
+For the homepage we only need to call SignIn Component that we created before
+
+```tsx title="/app/page.tsx"
+import SignIn from "@/components/sign-in";
+
+export default function Home() {
+  return (
+    <div className="flex justify-center items-center">
+      <SignIn />
+    </div>
+  );
+}
+```
+
+## Create a Page for Testing
+
+```tsx title="/app/user/page.tsx"
+import { auth } from "@/auth";
+import { SignOut } from "@/components/sign-out";
+
+export default async function Page() {
+  const session = await auth();
+  if (!session) return <div>Not authenticated</div>;
+
+  return (
+    <div>
+      <pre>{JSON.stringify(session, null, 2)}</pre>
+      <SignOut />
+    </div>
+  );
+}
+```
+
+- We use the `auth()` function to retrieve the session object.
+- If the user is not authenticated, we simply show a message: `Not authenticated`.
+- If the user is authenticated, we display the session details using `JSON.stringify(session, null, 2)` to format the session data for readability.
