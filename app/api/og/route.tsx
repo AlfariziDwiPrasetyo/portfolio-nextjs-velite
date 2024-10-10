@@ -37,12 +37,12 @@ export async function GET(req: NextRequest) {
             <div tw="flex font-bold text-[60px]">{heading}</div>
           </div>
           <div tw="flex items-center w-full">
-            <div tw="flex text-xl align-items:baseline">
+            <div tw="flex text-xl items-center align-items:baseline">
               <BsGlobe size={25} />
-              <div tw="ml-1">shirookami.vercel.app</div>
+              <div tw="ml-1">shirookami.my.id</div>
             </div>
             <div tw="flex items-center text-xl">
-              <div tw="flex ml-5">
+              <div tw="flex ml-5 items-center">
                 <BsGithub size={25} />
                 <div tw="ml-1">AlfariziDwiPrasetyo</div>
               </div>
