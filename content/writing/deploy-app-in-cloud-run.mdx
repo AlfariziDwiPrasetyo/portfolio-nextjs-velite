@@ -1,0 +1,145 @@
+---
+title: How to deploy APP in Cloud Run with gcloud CLI
+description: Learn how to deploy an application to Google Cloud Run using the gcloud CLI step-by-step.
+date: 2024-11-24
+published: true
+---
+
+## Introduction
+
+Deploying applications in the cloud has become essential for modern software development. Google Cloud Run offers a serverless platform to run containerized applications, allowing developers to focus on their code without worrying about managing infrastructure.
+
+In this guide, we'll walk you through the process of deploying a Node.js application to Cloud Run using the `gcloud` CLI. Whether you're a beginner or already familiar with Docker and Cloud Run, this step-by-step tutorial will help you get your application up and running in no time.
+
+By the end of this guide, you'll learn how to:
+
+- Create a container image using Docker.
+- Push the image to Google Artifact Registry.
+- Deploy the image to Cloud Run and make it publicly accessible.
+
+Let’s get started!
+
+## Step 1: Create a Dockerfile
+
+The first step in deploying an application to Cloud Run is containerizing it. For that, we need a `Dockerfile`. Create a new file named `Dockerfile` in your project directory:
+
+```Dockerfile title="Dockerfile"
+FROM node:22.9-alpine
+WORKDIR /app
+COPY . .
+COPY .env .env
+RUN pnpm install
+EXPOSE 3000
+CMD ["pnpm", "run", "start"]
+```
+
+Explanation:
+
+- Base Image: Uses Node.js 22.9 with Alpine Linux for a lightweight container.
+- Working Directory: Sets /app as the directory inside the container where the code will run.
+- Copy Files: Copies project files and .env into the container.
+- Install Dependencies: Uses pnpm to install dependencies.
+- Expose Port: Opens port 3000 for the application.
+- Start Command: Runs the app with pnpm run start.
+
+## step 2: Create .gcloudignore
+
+When deploying to Cloud Run, it’s essential to control which files are uploaded to Google Cloud. To ensure the .env file is included in the container but not ignored by default, create a .gcloudignore file:
+
+Add the following content to your .gcloudignore:
+
+```bash title=".gcloudignore"
+# This file specifies files that are _not_ uploaded to Google Cloud
+
+# Ignore Git-related files
+.git
+.gitignore
+
+# Node.js dependencies
+node_modules/
+
+# Include sensitive files explicitly
+!.env
+!src/firebase-key.json
+```
+
+## Step 3: Enable Google Cloud Services
+
+Before deploying, ensure the necessary Google Cloud services are enabled. Run the following command to activate the Artifact Registry, Cloud Build, and Cloud Run APIs:
+
+```bash
+gcloud services enable artifactregistry.googleapis.com cloudbuild.googleapis.com run.googleapis.com
+```
+
+This command ensures you can create, build, and deploy container images.
+
+## Step 4: Create an Artifact Registry Repository
+
+Next, create a repository in Artifact Registry to store your Docker image. Use the following command:
+
+```bash
+gcloud artifacts repositories create ${repository_name} --repository-format=docker --location=asia-southeast2 --async
+```
+
+- `${repository_name}`: Replace this with the desired name for your repository. For example, you might name it backend-express or backend-repo.
+- `--repository-format`: Sets the format to Docker images.
+- `--location`: Specifies the region, such as asia-southeast2.
+- `--async`: Allows the command to return immediately without waiting for the process to finish.
+
+Once this command is executed, Artifact Registry will create a new Docker repository in the specified region. You can then use this repository to store and manage your container images.
+
+## Step 5: Build and Push the Container Image
+
+Once the repository is ready, build a container image from your Dockerfile and push it to Artifact Registry:
+
+```bash
+gcloud builds submit --tag asia-southeast2-docker.pkg.dev/${GOOGLE_CLOUD_PROJECT}/${repository_name}/${image_name}:${image_version}
+```
+
+- `${GOOGLE_CLOUD_PROJECT}`: The unique ID of your Google Cloud project. This organizes your cloud resources.
+- `${repository_name}`: The name of your Artifact Registry repository. For example, this could be backend or backend-repo.
+- `${image_name}`: The name of the container image you are building. For example, this could be express-api.
+- `${image_version}`: The version tag for your image. Use a semantic versioning format like 1.0.0 to identify different builds of your app.
+
+### Example
+
+If your project ID is my-project-28ab, the repository name is backend, the image name is express-api, and the version is 1.0.0, the command would look like this:
+
+```bash
+gcloud builds submit --tag asia-southeast2-docker.pkg.dev/my-project-28ab/backend/express-api:1.0.0
+```
+
+Here’s what this command does:
+
+- Builds the image: Using the instructions in your Dockerfile.
+- Tags the image: Assigns it a name and version (notes-api:1.0.0).
+- Pushes the image: Uploads it to your Artifact Registry repository.
+
+You should see an output similar to this when the process is successful:
+
+```yaml
+ID: 286f19bf-71a3-490f-99fc-be6057e5c029
+CREATE_TIME: 2024-04-26T03:03:46+00:00
+DURATION: 59S
+SOURCE: gs://project-exploration-383309_cloudbuild/source/1714100624.393471-07ce41ed4e744090a7839c608c7c4b94.tgz
+IMAGES: asia-southeast2-docker.pkg.dev/my-project-28ab/backend/express-api:1.0.0
+STATUS: SUCCESS
+```
+
+## Step 6: Deploy to Cloud Run
+
+With the image ready in Artifact Registry, you can now deploy it to Cloud Run. Use the following command:
+
+```bash
+gcloud run deploy --image asia-southeast2-docker.pkg.dev/${GOOGLE_CLOUD_PROJECT}/${repository_name}/${image_name}:${image_version}
+```
+
+You’ll be prompted to configure the deployment:
+
+- Service name: Press Enter to name the service express-api.
+- Region: Select the appropriate region, such as Jakarta (asia-southeast2).
+- Allow unauthenticated invocations: Type y to allow public access to the service.
+
+Once deployed, you’ll receive a URL where your application is publicly accessible.
+
+Congratulations! You’ve successfully deployed your application to Cloud Run. For more details, visit the official gcloud CLI or Cloud Run documentation.
