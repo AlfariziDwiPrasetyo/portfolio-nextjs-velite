@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
 import { Button } from "./ui/button";
 import { iconMapping } from "./WorkItem";
+import { truncateText } from "@/lib/utils";
 
 function WorksSection() {
   return (
@@ -14,8 +15,11 @@ function WorksSection() {
         {work.map((project) => (
           <div className="w-full border-2 mb-5 p-5  border-primary rounded-md">
             <h3>
-              <a href={project.slug} className="no-underline text-2xl font-semibold">
-                    {project.title}
+              <a
+                href={project.slug}
+                className="no-underline text-2xl font-semibold"
+              >
+                {project.title}
               </a>
             </h3>
             <div className="flex items-center">
@@ -29,7 +33,7 @@ function WorksSection() {
                 <MdArrowOutward className="w-3 h-3 no-underline ml-1" />
               ) : null}
             </div>
-            <p>{project.description}</p>
+            <p>{truncateText(project.description || "", 160)}</p>
             <div className="flex justify-end items-center md:pt-2 space-x-2">
               {project.stacks?.map((stack) => {
                 return <div key={stack}>{iconMapping[stack] || null}</div>;

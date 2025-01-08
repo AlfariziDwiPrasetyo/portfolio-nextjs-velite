@@ -20,6 +20,20 @@ import NestjsIcon from "@/lib/stacks/NestjsIcon";
 import TailwindIcon from "@/lib/stacks/TailwindIcon";
 import ZodIcon from "@/lib/stacks/ZodIcon";
 import Image from "next/image";
+import GoogleCloud from "@/lib/stacks/GoogleCloud";
+import JavascriptIcon from "@/lib/stacks/JavascriptIcon";
+
+export const iconMapping: Record<string, JSX.Element> = {
+  nextjs: <NextjsIcon />,
+  mongodb: <MongodbIcon />,
+  nestjs: <NestjsIcon />,
+  supabase: <SupabaseIcon />,
+  tailwind: <TailwindIcon />,
+  typescript: <TypescriptIcon />,
+  zod: <ZodIcon />,
+  google_cloud: <GoogleCloud />,
+  javascript: <JavascriptIcon />,
+};
 
 interface WorkitemProps {
   title: string;
@@ -30,16 +44,6 @@ interface WorkitemProps {
   slug: string;
 }
 
-export const iconMapping: Record<any, JSX.Element> = {
-  nextjs: <NextjsIcon />,
-  mongodb: <MongodbIcon />,
-  nestjs: <NestjsIcon />,
-  supabase: <SupabaseIcon />,
-  tailwind: <TailwindIcon />,
-  typescript: <TypescriptIcon />,
-  zod: <ZodIcon />,
-};
-
 function WorkItem({
   title,
   image,
@@ -48,7 +52,6 @@ function WorkItem({
   stacks,
   slug,
 }: WorkitemProps) {
-  console.log(image);
   return (
     <Card className="hover:border-primary w-full mb-2 sm:mb-2 md:mb-0 max-w-full">
       <CardHeader>
@@ -58,12 +61,12 @@ function WorkItem({
             alt={`${title} image`}
             width={1000}
             height={1000}
-            className="pb-5"
+            className="rounded-md"
           />
         )}
 
-        <CardTitle>
-          <Link className="no-underline mt-10 hover:underline" href={slug}>
+        <CardTitle className="pt-5">
+          <Link className="no-underline mt-15 hover:underline" href={slug}>
             {title}
           </Link>
         </CardTitle>
@@ -86,7 +89,10 @@ function WorkItem({
       <CardFooter className="justify-end">
         <div className="flex items-center md:pt-2 space-x-2">
           {stacks?.map((stack) => {
-            return <div key={stack}>{iconMapping[stack] || null}</div>;
+            const normalizedStack = stack.toLowerCase();
+            return (
+              <div key={stack}>{iconMapping[normalizedStack] || null}</div>
+            );
           })}
         </div>
       </CardFooter>
