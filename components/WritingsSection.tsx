@@ -1,11 +1,12 @@
 import React from "react";
 import { writing } from "#site/content";
 import Link from "next/link";
-import { formatDate, sortWritingPosts } from "@/lib/utils";
+import { formatDate, sortToLatest } from "@/lib/utils";
 import { MoveRight } from "lucide-react";
 
 function WritingsSection() {
-  const data = sortWritingPosts(writing.filter((post) => post.published));
+  const data = sortToLatest(writing.filter((post) => post.published));
+
   return (
     <section className="mt-20">
       <h2 className="font-semibold text-3xl md:text-4xl">Writings</h2>

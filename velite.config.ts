@@ -35,6 +35,7 @@ const work = defineCollection({
       published: s.boolean().default(true),
       body: s.mdx(),
       link: s.string().optional(),
+      date: s.isodate(),
       stacks: s.string().array(),
     })
     .transform(computedFields),
