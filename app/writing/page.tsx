@@ -1,7 +1,7 @@
 import React from "react";
 import { writing } from "#site/content";
 import WritingItem from "@/components/WritingItem";
-import { sortWritingPosts } from "@/lib/utils";
+import { sortToLatest } from "@/lib/utils";
 import QueryPagination from "@/components/QueryPagination";
 
 const WRITING_PER_PAGE = 4;
@@ -14,7 +14,7 @@ interface WritingParamProps {
 
 function page({ searchParams }: WritingParamProps) {
   const currentPage = Number(searchParams?.page) || 1;
-  const sortedData = sortWritingPosts(writing.filter((post) => post.published));
+  const sortedData = sortToLatest(writing.filter((post) => post.published));
   const totalPage = Math.ceil(sortedData.length / WRITING_PER_PAGE);
 
   const displayWriting = sortedData.slice(
