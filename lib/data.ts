@@ -1,0 +1,18 @@
+export const skills = [
+  { name: "javascript" },
+  { name: "typescript" },
+  { name: "react" },
+  { name: "nextjs" },
+  { name: "express" },
+  { name: "hono" },
+  { name: "docker" },
+  { name: "php" },
+  { name: "laravel" },
+  { name: "python" },
+  { name: "flask" },
+  { name: "google cloud" },
+  { name: "mysql" },
+  { name: "postgresql" },
+  { name: "drizzle" },
+  { name: "prisma" },
+];
