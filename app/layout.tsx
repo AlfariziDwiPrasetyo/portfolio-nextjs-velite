@@ -9,9 +9,10 @@ import Footer from "@/components/Footer";
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Shirookami",
-  description: "My personal web portfolio",
-  metadataBase: new URL("https://shirookami.my.id/"),
+  title: "Al Farizi Dwi Prasetyo",
+  description:
+    "Hi, I'm Alfarizi Dwi Prasetyo 👋 I'm junior software engineer from indonesia.",
+  metadataBase: new URL("https://shirookami.my.id"),
 };
 
 export default function RootLayout({
