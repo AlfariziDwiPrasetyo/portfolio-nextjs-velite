@@ -60,7 +60,7 @@ function WorkItem({
             alt={`${title} image`}
             width={1000}
             height={1000}
-            className="rounded-md"
+            className="rounded-md w-full h-48 object-cover"
           />
         )}
 
