@@ -14,7 +14,7 @@ function WorksSection() {
     <section className="mt-20">
       <h2 className="font-semibold text-3xl md:text-4xl">Works</h2>
       <div className="pt-4 pb-10">
-        {data.map((project) => (
+        {data.slice(0, 3).map((project) => (
           <div className="w-full border-2 mb-5 p-5  border-primary rounded-md">
             <h3>
               <a
