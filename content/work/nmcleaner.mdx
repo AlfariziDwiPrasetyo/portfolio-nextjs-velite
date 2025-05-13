@@ -1,0 +1,52 @@
+---
+title: Node Module Cleaner (nmcleaner)
+description: nmcleaner is a simple command-line tool that helps you clean up all `node_modules` directories recursively in a given project directory
+link: github.com/AlfariziDwiPrasetyo/nmcleaner
+date: 2025-05-13
+stacks:
+        - typescript
+image: nmcleaner.png
+published: true
+---
+# Node Modules Cleaner (nmcleaner)
+
+`nmcleaner` is a simple command-line tool that helps you clean up all `node_modules` directories recursively in a given project directory. It provides options to perform a dry run (just printing the directories without deleting them) and to force deletion even if there are permission errors.
+
+## Installation
+
+To install `nmcleaner`, you can use [Bun](https://bun.sh) as your package manager:
+
+1. Make sure you have Bun installed. If you don't, you can install it by following the instructions on the [Bun website](https://bun.sh/).
+
+2. Clone or download the repository.
+
+3. Inside the repository, run the following command to make the script executable :
+
+```bash
+bun install # to install the dependencies
+
+bun link # to link a local package.
+
+# start to use the tools
+nmcleaner ./test/ --dry-run --force
+```
+
+### Arguments
+
+- `[target]`: The target directory where the cleanup should start. If not provided, it defaults to the current directory (`.`).
+
+### Options
+
+- `--dry-run`: Runs the tool in dry-run mode. It will print the directories that would be deleted without actually removing anything.  
+- `-f, --force`: Forces the deletion of `node_modules` directories, even if there are permission errors.
+
+### Example Commands
+
+1. Clean the current directory (with `node_modules` removed recursively).
+2. Clean a specific directory (e.g., `./project`).
+3. Dry run (print the directories that would be deleted without actually deleting them).
+4. Force deletion (ignore permission errors and force delete).
+
+``` bash
+nmcleaner ./test/ --dry-run --force
+```
